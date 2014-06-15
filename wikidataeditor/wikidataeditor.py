@@ -8,6 +8,8 @@ import time
 import re
 import simplejson as json
 
+from item import Item
+
 logger = logging.getLogger('wikidataeditor')
 
 
@@ -77,9 +79,11 @@ class Site:
         if response['login']['result'] == 'NeedToken':
             args['lgtoken'] = response['login']['token']
             response = self.raw_api_call(args)
-            print 'HEYA'
 
         return (response['login']['result'] == 'Success')
+
+    def item(self, entity):
+        return Item(self, entity)
 
     def pageinfo(self, entity):
         args = {
