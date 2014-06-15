@@ -1,5 +1,9 @@
 Basic Python Wikidata-editor adhering to PEP8 and making use of quality libraries such as `Requests`.
 
+
+	pip install curdling
+	curd install -r requirements.txt
+
 Example:
 
 ```python
@@ -12,6 +16,9 @@ if not wd.login('username', 'verysecretpassword'):
 	sys.exit(1)
 
 item = wd.item('Q5')
+print item.label('nb', ('nn','en'))
+print item.description('nb', ('nn','en'))
+
 for claim in item.claims('P31'):
 	print claim
 
