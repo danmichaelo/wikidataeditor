@@ -1,4 +1,8 @@
 import simplejson as json
+import logging
+import time
+
+logger = logging.getLogger('wikidataeditor.item')
 
 
 class Item:
