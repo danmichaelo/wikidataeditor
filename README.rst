@@ -1,3 +1,8 @@
+.. image:: https://travis-ci.org/danmichaelo/wikidataeditor.svg?branch=master
+    :target: https://travis-ci.org/danmichaelo/wikidataeditor
+
+Rename to wbclient??
+
 Basic Python Wikidata-editor adhering to PEP8 and making use of quality libraries such as `Requests`.
 
 
