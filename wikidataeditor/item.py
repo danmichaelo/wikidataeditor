@@ -11,8 +11,39 @@ class Item:
         """
         self.site = site
 
-        # Make sure it's a string, then strip off 'Q'
-        self.entity = '{}'.format(entity).lstrip('Q')
+        # Normalize
+        self.entity = 'Q{}'.format(entity.lstrip('Q'))
+
+        self.props = self.get_props('labels|descriptions|aliases')
+        self.exists = True
+        if self.props is None:
+            self.exists = False
+
+    def prop(self, prop, language, fallback_languages=None):
+        if prop not in self.props:
+            return None
+
+        res = self.props[prop]
+        languages = [language]
+        if fallback_languages:
+            languages.extend(fallback_languages)
+
+        for lang in languages:
+            if lang in res:
+                if 'value' in res[lang]:
+                    return res[lang]['value']
+                else:
+                    return [r['value'] for r in res[lang]]
+        return None
+
+    def label(self, language, fallback_languages=None):
+        return self.prop('labels', language, fallback_languages)
+
+    def description(self, language, fallback_languages=None):
+        return self.prop('descriptions', language, fallback_languages)
+
+    def aliases(self, language, fallback_languages=None):
+        return self.prop('aliases', language, fallback_languages)
 
     def pageinfo(self):
         args = {
@@ -21,7 +52,7 @@ class Item:
             'intoken': 'edit',
             'titles': self.entity
         }
-        return self.raw_api_call(args)
+        return self.site.raw_api_call(args)
 
     def set_reference(self, claim, reference):
         """
@@ -55,7 +86,7 @@ class Item:
             'token': edittoken,
             'baserevid': baserevid
         }
-        return self.raw_api_call(args)
+        return self.site.raw_api_call(args)
 
     def claims(self, prop):
         args = {
@@ -63,7 +94,7 @@ class Item:
             'entity': self.entity,
             'property': prop
         }
-        resp = self.raw_api_call(args)
+        resp = self.site.raw_api_call(args)
         if 'claims' in resp and prop in resp['claims']:
             return resp['claims'][prop]
         return []
@@ -88,12 +119,12 @@ class Item:
 
         logger.info('  %s: Adding claim %s = %s', self.entity, prop, value)
         time.sleep(2)
-        response = self.raw_api_call(args)
+        response = self.site.raw_api_call(args)
         return response['claim']
 
     def create_claim_if_not_exists(self, prop, value):
 
-        claims = self.get_claims(prop)
+        claims = self.claims(prop)
 
         if claims:
             current_value = claims[0]['mainsnak']['datavalue']['value']
@@ -133,7 +164,7 @@ class Item:
         logger.info('  Setting description')
         time.sleep(2)
 
-        response = self.raw_api_call(args)
+        response = self.site.raw_api_call(args)
         return response
 
     def remove_description(self, lang, summary=None):
@@ -163,7 +194,7 @@ class Item:
         logger.info('  Setting label')
         time.sleep(2)
 
-        response = self.raw_api_call(args)
+        response = self.site.raw_api_call(args)
         return response
 
     def remove_label(self, lang, summary=None):
@@ -179,7 +210,7 @@ class Item:
         if languages:
             args['languages'] = languages
 
-        result = self.raw_api_call(args)
+        result = self.site.raw_api_call(args)
 
         if result['success'] != 1:
             return None
