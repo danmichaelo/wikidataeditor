@@ -7,7 +7,6 @@ import logging
 import time
 import re
 import simplejson as json
-import yaml
 
 logger = logging.getLogger('wikidataeditor')
 
