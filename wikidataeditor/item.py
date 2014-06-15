@@ -12,7 +12,7 @@ class Item:
         self.site = site
 
         # Normalize
-        self.entity = 'Q{}'.format(entity.lstrip('Q'))
+        self.entity = 'Q{}'.format('{}'.format(entity).lstrip('Q'))
 
         self.props = self.get_props('labels|descriptions|aliases')
         self.exists = True
