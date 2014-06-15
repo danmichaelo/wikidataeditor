@@ -2,7 +2,7 @@ import unittest
 import sys
 import os
 import httpretty
-from sure import expect
+# from sure import expect
 import requests
 import simplejson as json
 
