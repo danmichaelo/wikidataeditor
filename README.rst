@@ -13,20 +13,21 @@ Basic Python Wikidata-editor adhering to PEP8 and making use of quality librarie
 
 Example:
 
-```python
-import sys
-from wikidataeditor import Repo
-wd = Repo('MyAwesomeTool/0.1 (+http://tools.wmflabs.org/myawesometool)')  # Specifying our user-agent
+.. code:: python
 
-if not wd.login('username', 'verysecretpassword'):
-	print 'Login failed'
-	sys.exit(1)
+  import sys
+  from wikidataeditor import Repo
+  wd = Repo('MyAwesomeTool/0.1 (+http://tools.wmflabs.org/myawesometool)')  # Specifying our user-agent
 
-item = wd.item('Q5')
-print item.label('nb', ('nn','en'))
-print item.description('nb', ('nn','en'))
+  if not wd.login('username', 'verysecretpassword'):
+      print 'Login failed'
+      sys.exit(1)
 
-for claim in item.claims('P31'):
-	print claim
+  item = wd.item('Q5')
+  print item.label('nb', ('nn','en'))
+  print item.description('nb', ('nn','en'))
+
+  for claim in item.claims('P31'):
+      print claim
 
 ```
