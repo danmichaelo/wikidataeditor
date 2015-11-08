@@ -18,7 +18,7 @@ class Item:
         # Normalize
         self.entity = 'Q{}'.format('{}'.format(entity).lstrip('Q'))
 
-        self.props = self.get_props('labels|descriptions|aliases')
+        self.props = self.get_props('labels|descriptions|aliases|sitelinks')
         self.exists = True
         if self.props is None:
             self.exists = False
@@ -36,6 +36,8 @@ class Item:
             if lang in res:
                 if 'value' in res[lang]:
                     return res[lang]['value']
+                elif 'title' in res[lang]:
+                    return res[lang]['title']
                 else:
                     return [r['value'] for r in res[lang]]
         return None
@@ -48,6 +50,9 @@ class Item:
 
     def aliases(self, language, fallback_languages=None):
         return self.prop('aliases', language, fallback_languages)
+
+    def sitelinks(self, site_id):
+        return self.prop('sitelinks', site_id)
 
     def pageinfo(self):
         args = {
@@ -204,7 +209,7 @@ class Item:
     def remove_label(self, lang, summary=None):
         return self.set_label(lang, '', summary)
 
-    def get_props(self, props='labels|descriptions|aliases', languages=None):
+    def get_props(self, props='labels|descriptions|aliases|sitelinks', languages=None):
         args = {
             'action': 'wbgetentities',
             'props': props,
