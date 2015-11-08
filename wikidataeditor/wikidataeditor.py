@@ -101,6 +101,14 @@ class Repo:
         }
         return self.raw_api_call(args)
 
+    def search(self, query):
+        args = {
+            'action': 'query',
+            'list': 'search',
+            'srsearch': query
+        }
+        return self.raw_api_call(args)
+
     def add_entity(self, site, lang, title):
         args = {
             'new': 'item',
