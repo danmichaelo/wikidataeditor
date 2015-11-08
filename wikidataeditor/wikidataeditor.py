@@ -13,7 +13,7 @@ from item import Item
 logger = logging.getLogger('wikidataeditor')
 
 
-class Site:
+class Repo:
 
     def __init__(self, user_agent,
                  api_url='https://www.wikidata.org/w/api.php'):

@@ -1,1 +1,1 @@
-from wikidataeditor import Site, __ver__
+from wikidataeditor import Repo, __ver__
