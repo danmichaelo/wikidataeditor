@@ -22,5 +22,5 @@ setup(name='wikidataeditor',
       url='https://github.com/danmichaelo/wikidataeditor',
       license='Unlicense',
       packages=['wikidataeditor'],
-      install_requires=['simplejson', 'requests']
+      install_requires=['requests']
       )

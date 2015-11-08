@@ -6,7 +6,7 @@ import requests
 import logging
 import time
 import re
-import simplejson as json
+import json
 
 from item import Item
 
