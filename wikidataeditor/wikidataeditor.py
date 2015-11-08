@@ -1,14 +1,13 @@
 # encoding=utf8
 # @author Dan Michael O. Heggø <danmichaelo@gmail.com>
-__ver__ = '0.0.1'
-
 import requests
 import logging
 import time
 import re
 import json
-
 from item import Item
+
+__ver__ = '0.0.1'
 
 logger = logging.getLogger('wikidataeditor')
 
